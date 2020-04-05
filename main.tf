@@ -31,13 +31,13 @@ resource "aws_iam_role" "ecs_task_execution_role" {
 ASSUME_ROLE_POLICY
 }
 
-data "aws_iam_policy" "AmazonECSTaskExecutionRolePolicy" {
+data "aws_iam_policy" "amazon_ecs_task_execution_role_policy" {
   arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-resource "aws_iam_role_policy_attachment" "test-attach" {
+resource "aws_iam_role_policy_attachment" "policy_role_attachment" {
   role = aws_iam_role.ecs_task_execution_role.name
-  policy_arn = data.aws_iam_policy.AmazonECSTaskExecutionRolePolicy.arn
+  policy_arn = data.aws_iam_policy.amazon_ecs_task_execution_role_policy.arn
 }
 
 
