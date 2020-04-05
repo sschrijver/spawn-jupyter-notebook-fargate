@@ -1,5 +1,5 @@
 # Easy Jupyter Deployment on ECS With Terraform
-With this Terraform script, you can easily deploy a Jupyter Notebook on ECS.
+With this Terraform script, you can easily deploy a Jupyter Notebook on ECS. I want to refer to [this medium post](https://medium.com/@stephanschrijver/spinning-up-jupyter-notebooks-as-ecs-service-in-aws-with-terraform-805ac111d74b) for further explanation.   
 
 ## 1. Install terraform
 First, install terraform: https://learn.hashicorp.com/terraform/getting-started/install.html
