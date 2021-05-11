@@ -53,13 +53,12 @@ resource "aws_ecs_task_definition" "jupyter_task_definition" {
   cpu = var.cpu
   memory = var.memory
   execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
-
   container_definitions = <<TASK_DEFINITION
   [
     {
-        "entryPoint": ["start-notebook.sh","--NotebookApp.token='${var.token}'"],
+        "entryPoint": ["start.sh", "jupyter", "lab", "--ServerApp.token='${var.token}'"],
         "essential": true,
-        "image": "registry.hub.docker.com/jupyter/datascience-notebook:${var.jupyter_docker_tag}",
+        "image": "registry.hub.docker.com/jupyter/scipy-notebook:${var.jupyter_docker_tag}",
         "name": "jupyter-${random_string.random_string.result}",
         "portMappings": [
             {
@@ -140,7 +139,9 @@ resource "aws_ecs_service" "jupyter_service" {
   network_configuration {
     subnets = var.fargate_subnets
     security_groups = [
-      aws_security_group.jupyter_security_group.id]
+      aws_security_group.jupyter_security_group.id
+    ]
+    assign_public_ip = true
   }
 
   load_balancer {
@@ -162,9 +163,10 @@ resource "aws_lb_listener_rule" "jupyter_lb_listener_rule" {
   }
 
   condition {
-    field = "host-header"
+    host_header {
     values = [
       "jupyter-${random_string.random_string.result}.${var.domain}"]
+    }
   }
   depends_on = [
     aws_lb_target_group.jupyter_target_group]
