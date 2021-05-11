@@ -140,7 +140,9 @@ resource "aws_ecs_service" "jupyter_service" {
   network_configuration {
     subnets = var.fargate_subnets
     security_groups = [
-      aws_security_group.jupyter_security_group.id]
+      aws_security_group.jupyter_security_group.id
+    ]
+    assign_public_ip = true
   }
 
   load_balancer {
@@ -162,9 +164,10 @@ resource "aws_lb_listener_rule" "jupyter_lb_listener_rule" {
   }
 
   condition {
-    field = "host-header"
+    host_header {
     values = [
       "jupyter-${random_string.random_string.result}.${var.domain}"]
+    }
   }
   depends_on = [
     aws_lb_target_group.jupyter_target_group]
