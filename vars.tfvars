@@ -8,7 +8,7 @@ fargate_subnets = [
   "SUBNET_1_HERE",
   "SUBNET_2_HERE",
   "SUBNET_3_HERE"]
-jupyter_docker_tag = "latest"
+jupyter_docker_tag = "dc9744740e12"
 cpu = 1024
 memory = 2048
 domain = "ROUTE_53_DOMAIN_NAME_HERE"
